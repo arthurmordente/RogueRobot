@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip audioDeath2;
     public AudioClip audioCoin;
     public AudioClip audioSkill;
+    public AudioClip audioHit;
 
     private AudioSource audioSource;
     void Start()
@@ -36,6 +37,12 @@ public class AudioManager : MonoBehaviour
     public void PlayAudio4()
     {
         audioSource.clip = audioSkill;
+        audioSource.Play();
+    }
+
+    public void PlayAudio5()
+    {
+        audioSource.clip = audioHit;
         audioSource.Play();
     }
 }
