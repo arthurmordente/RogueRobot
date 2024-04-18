@@ -27,7 +27,7 @@ public class PositionTracker : MonoBehaviour
         // Verificar condição de derrota
         if (enemySection >= playerSection)
         {
-            //Debug.Log($"enemySection: {enemySection}, playerSection: {playerSection}");
+            Debug.Log($"enemySection: {enemySection}, playerSection: {playerSection}");
             GameManager.instance.GameOver();
         }
     }
