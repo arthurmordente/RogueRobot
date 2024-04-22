@@ -4081,6 +4081,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -525073085877160094, guid: 2476bc951667dcb40804ee427d8631a2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 222380405155342453, guid: 2476bc951667dcb40804ee427d8631a2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2476bc951667dcb40804ee427d8631a2,
         type: 3}
       propertyPath: m_Name
@@ -4182,7 +4192,7 @@ MonoBehaviour:
   audioDeath2: {fileID: 8300000, guid: 7478151cf36724a7dada558f746c3633, type: 3}
   audioCoin: {fileID: 8300000, guid: 52320e590bf774734a288886eba557ba, type: 3}
   audioSkill: {fileID: 8300000, guid: 35fbad8cdde724f11ba6481f1e64af71, type: 3}
-  audioHit: {fileID: 0}
+  audioHit: {fileID: 8300000, guid: b99da9a57308d4ba1bee1cf1d9038376, type: 3}
 --- !u!4 &1775444547
 Transform:
   m_ObjectHideFlags: 0

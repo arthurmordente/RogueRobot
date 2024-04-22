@@ -97,10 +97,14 @@ public class PlayerMovement : MonoBehaviour
         float endTime = Time.time + duration;
         while (Time.time < endTime)
         {
-            playerRenderer.enabled = !playerRenderer.enabled; // Alterna a visibilidade
+            if(playerRenderer != null){
+                playerRenderer.enabled = !playerRenderer.enabled; // Alterna a visibilidade
+            }
             yield return new WaitForSeconds(blinkInterval); // Espera pelo intervalo de piscar
         }
-        playerRenderer.enabled = true; // Garante que o renderizador esteja ativado ao final
+        if(playerRenderer != null){
+            playerRenderer.enabled = true;
+        }
     }
 
     private void UpdateMovementSpeed()

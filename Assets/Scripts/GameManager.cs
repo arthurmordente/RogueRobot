@@ -75,17 +75,4 @@ public class GameManager : MonoBehaviour
         scoreManager.DisplayTopScores();
         loseScreen.SetActive(true);
     }
-
-    public void RestartGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        Time.timeScale = 1.0f;
-    }
-    public void StartGame()
-    {
-        SceneManager.LoadScene("Runner");
-    }
-
-
-
 }
