@@ -846,8 +846,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 417775877}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 417775881}
+        m_TargetAssemblyTypeName: HUDManager, Assembly-CSharp
         m_MethodName: RestartGame
         m_Mode: 1
         m_Arguments:
@@ -1173,6 +1173,7 @@ GameObject:
   - component: {fileID: 417775880}
   - component: {fileID: 417775878}
   - component: {fileID: 417775879}
+  - component: {fileID: 417775881}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -1280,6 +1281,18 @@ MonoBehaviour:
   sectionLength: 50
   playerSection: 0
   enemySection: 0
+--- !u!114 &417775881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417775875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 523b14febbd641e4da542decf882555f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &486295017
 GameObject:
   m_ObjectHideFlags: 0
