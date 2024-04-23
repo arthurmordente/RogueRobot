@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public AudioManager audioManager;
     public ScoreManager scoreManager;
+    public PositionTracker positionTracker;
     public TMP_Text speedDisplay;
     public TMP_Text multiplierDisplay;
     public GameObject loseScreen;
@@ -15,6 +16,9 @@ public class GameManager : MonoBehaviour
     public float maxSpeed = 10.0f;
     public float speedIncrement = 0.1f;
     public float scoreMultiplier = 1.0f;
+    public float baseScoreMultiplier = 1.0f;
+    public float perfectionScoreMultiplier = 0.0f;
+    public float distanceScoreMultiplier = 0.0f;
 
     public float currentSpeed;
 
@@ -35,13 +39,25 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
+
+        Accelarate();
+        UpdateMultiplier();
+
+        speedDisplay.text = "Speed: " + currentSpeed.ToString("F2");
+        multiplierDisplay.text = "Multiplier: " + scoreMultiplier.ToString("F2");
+    }
+
+    public void Accelarate(){
         if (currentSpeed < maxSpeed)
         {
             currentSpeed += speedIncrement * Time.deltaTime;
         }
+    }
 
-        speedDisplay.text = "Speed: " + currentSpeed.ToString("F2");
-        multiplierDisplay.text = "Multiplier: " + scoreMultiplier.ToString("F2");
+    public void UpdateMultiplier(){
+        distanceScoreMultiplier = positionTracker.GetDistanceMultiplier();
+        scoreMultiplier = baseScoreMultiplier + distanceScoreMultiplier + perfectionScoreMultiplier;
+
     }
 
     public void dilateTime()

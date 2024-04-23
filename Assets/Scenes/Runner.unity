@@ -1210,6 +1210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioManager: {fileID: 1775444546}
   scoreManager: {fileID: 417775879}
+  positionTracker: {fileID: 417775880}
   speedDisplay: {fileID: 713162274}
   multiplierDisplay: {fileID: 1604683231}
   loseScreen: {fileID: 177485848}
@@ -1217,6 +1218,9 @@ MonoBehaviour:
   maxSpeed: 10
   speedIncrement: 0.1
   scoreMultiplier: 1
+  baseScoreMultiplier: 1
+  perfectionScoreMultiplier: 0
+  distanceScoreMultiplier: 0
   currentSpeed: 0
 --- !u!114 &417775878
 MonoBehaviour:
@@ -1279,9 +1283,11 @@ MonoBehaviour:
   playerTransform: {fileID: 2078186105}
   enemyTransform: {fileID: 130673205}
   sectionLength: 50
+  minDistance: 0
   playerSection: 0
   enemySection: 0
   lastScoredSection: 0
+  sectionDistance: 0
 --- !u!114 &417775881
 MonoBehaviour:
   m_ObjectHideFlags: 0
