@@ -86,7 +86,7 @@ public class ScoreManager : MonoBehaviour
             float multiplier = PlayerPrefs.GetFloat("TopMultiplier" + i, 1); // Recupera o multiplicador
 
             // Atualiza o texto para incluir o multiplicador
-            topScoreTexts[i].text = score.ToString("F0") + " - " + player + " - x" + multiplier.ToString("F2");
+            topScoreTexts[i].text = player + " - " + score.ToString("F0") /*+ " - x" + multiplier.ToString("F2")*/;
         }
         scoreScreen.SetActive(true);
     }

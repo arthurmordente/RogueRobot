@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
 
     public void AddPoints(float value)
     {
-        value = value * scoreMultiplier;
+        value = value * scoreMultiplier * 10;
         scoreManager.AddPoints(value);
     }
 
