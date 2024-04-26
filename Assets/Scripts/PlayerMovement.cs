@@ -120,8 +120,8 @@ public class PlayerMovement : MonoBehaviour
         jumpSpeed = initialJumpSpeed * instance.currentSpeed;
         slideDuration = initialSlideDuration / instance.currentSpeed;
     }
-
-    private void HandleInput()
+    
+    /*private void HandleInput()
     {
         if (Time.timeScale != 0) // Se o jogo não está pausado
         {
@@ -131,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.S)) Slide();
             if (Input.GetKeyDown(KeyCode.E)) instance.dilateTime();
         }
-    }
+    }*/
 
     private void HandleMobileInput()
     {   
@@ -229,11 +229,13 @@ public class PlayerMovement : MonoBehaviour
     public void Acelerar()
     {
         Debug.Log("Acelerando");
+        instance.Accelerate();
     }
 
     public void Desacelerar()
     {
         Debug.Log("Desacelerando");
+        instance.Reduce();
     }
 
     private void Cheat()

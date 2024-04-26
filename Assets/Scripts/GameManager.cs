@@ -13,8 +13,9 @@ public class GameManager : MonoBehaviour
     public GameObject loseScreen;
 
     public float initialSpeed = 1.0f;
-    public float maxSpeed = 10.0f;
+    public float maxSpeed = 6.0f;
     public float speedIncrement = 0.1f;
+    public float speedMult = 0.2f;
     public float scoreMultiplier = 1.0f;
     public float baseScoreMultiplier = 1.0f;
     public float perfectionScoreMultiplier = 0.0f;
@@ -40,15 +41,15 @@ public class GameManager : MonoBehaviour
     void Update()
     {
 
-        Accelarate();
+        HandleSpeed();
         UpdateMultiplier();
 
         speedDisplay.text = "Speed: " + currentSpeed.ToString("F2");
         multiplierDisplay.text = "Multiplier: " + scoreMultiplier.ToString("F2");
     }
 
-    public void Accelarate(){
-        if (currentSpeed < maxSpeed)
+    public void HandleSpeed(){
+        if (currentSpeed < maxSpeed && currentSpeed >= 1.0f)
         {
             currentSpeed += speedIncrement * Time.deltaTime;
         }
@@ -60,14 +61,31 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void dilateTime()
+    public void Accelerate()
     {
-        currentSpeed = initialSpeed;
-        speedIncrement += 0.1f;
-        scoreMultiplier += 0.25f;
+        if (currentSpeed < maxSpeed)
+        {
+            currentSpeed = Mathf.Min(currentSpeed * (1 + speedMult), maxSpeed);
+        }
+        if (speedIncrement < 0.2f)
+        {
+            speedIncrement += 0.1f;
+        }
         audioManager.PlayAudio4();
     }
 
+    public void Reduce()
+    {
+        if (currentSpeed > initialSpeed)
+        {
+            currentSpeed = Mathf.Max(currentSpeed * (1 - speedMult), initialSpeed);
+        }
+        if (speedIncrement > -0.2f)
+        {
+            speedIncrement -= 0.1f;
+        }
+        audioManager.PlayAudio4();
+    }
     public void AddPoints(float value)
     {
         value = value * scoreMultiplier * 10;

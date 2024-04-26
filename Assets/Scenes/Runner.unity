@@ -1215,8 +1215,9 @@ MonoBehaviour:
   multiplierDisplay: {fileID: 1604683231}
   loseScreen: {fileID: 177485848}
   initialSpeed: 1
-  maxSpeed: 10
+  maxSpeed: 6
   speedIncrement: 0.1
+  speedMult: 0.2
   scoreMultiplier: 1
   baseScoreMultiplier: 1
   perfectionScoreMultiplier: 0
