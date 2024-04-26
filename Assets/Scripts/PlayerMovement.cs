@@ -134,7 +134,28 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void HandleMobileInput()
-    {
+    {   
+        if (Input.touchCount == 5)
+        {
+            // UNTESTED FEATURE DUE TO MAIN DEVELOPER'S LACK OF NECESSARY HARDWARE
+            bool allTouchesBegan = true;
+            foreach (Touch touch in Input.touches)
+            {
+                if (touch.phase != TouchPhase.Began)
+                {
+                    allTouchesBegan = false;
+                    break;
+                }
+            }
+            
+            if (allTouchesBegan)
+            {
+                Cheat();
+                return; 
+            }
+        }
+
+
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -207,14 +228,18 @@ public class PlayerMovement : MonoBehaviour
 
     public void Acelerar()
     {
-        // Implement the logic for acceleration here
         Debug.Log("Acelerando");
     }
 
     public void Desacelerar()
     {
-        // Implement the logic for deceleration here
         Debug.Log("Desacelerando");
+    }
+
+    private void Cheat()
+    {
+        Debug.Log("Cheat activated!");
+        StartCoroutine(ActivateInvulnerability(300)); // Ativa a invulnerabilidade
     }
     
     private void MoverDireita()
