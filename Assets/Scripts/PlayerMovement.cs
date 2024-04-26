@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public int _currentLane = 0;
     public float speed = 5.0f; // Velocidade do jogador
     public GameManager instance;
+    public PositionTracker posTracker;
 
     // Variáveis de movimento
     public float jumpHeight = 3.5f;
@@ -74,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
         {
             // Se não está ferido, torna-se ferido e inicia a recuperação
             instance.audioManager.PlayAudio5();
+            posTracker.UpdateLastHitSection();
             instance.Reduce(0.25f);
             isWounded = true;
             StartCoroutine(WoundRecoveryTimer(woundRecoveryTime));

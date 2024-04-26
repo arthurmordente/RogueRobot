@@ -3,7 +3,7 @@ using UnityEngine;
 public class PositionTracker : MonoBehaviour
 {
     public GameManager instance;
-    private float[] multipliers = new float[] {0.2f, 0.4f, 0.6f, 0.8f, 1.0f};
+    private float[] multipliers = new float[] {0.0f, 0.2f, 0.4f, 0.6f, 0.8f, 1.0f};
     public Transform playerTransform;
     public Transform enemyTransform;
     public float sectionLength = 50.0f;
@@ -12,6 +12,7 @@ public class PositionTracker : MonoBehaviour
     public float playerSection = 0f;  // Representa a seção atual do jogador como um float
     public float enemySection = 0f;   // Representa a seção atual do inimigo como um float
     public int lastScoredSection = 0;
+    public int lastHitSection = 0;
     public int sectionDistance;       // Distância entre seções como um inteiro aproximado
 
     void Start()
@@ -60,6 +61,17 @@ public class PositionTracker : MonoBehaviour
         return multipliers[index];
     }
 
+    public float GetPerfectMultiplier()
+    {
+        int distance = (int)(playerSection - lastHitSection);
+  
+
+        int maxDistance = Mathf.Clamp(distance, 0, 10); // Limita a distância máxima a 10 e a mínima a 2
+        int index = (maxDistance / 2); // Calcula o índice com base na distância
+
+        return multipliers[Mathf.Clamp(index, 0, multipliers.Length - 1)]; // Retorna o valor do array de multiplicadores
+    }
+
 
 
     public void CheckDefeat()
@@ -69,5 +81,9 @@ public class PositionTracker : MonoBehaviour
             Debug.Log($"Lost due to distance. EnemySection: {enemySection}, PlayerSection: {playerSection}");
             instance.GameOver();
         }
+    }
+
+    public void UpdateLastHitSection(){
+        lastHitSection = (int)playerSection;
     }
 }

@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateMultiplier(){
         distanceScoreMultiplier = positionTracker.GetDistanceMultiplier();
+        perfectionScoreMultiplier = positionTracker.GetPerfectMultiplier();
         scoreMultiplier = baseScoreMultiplier + distanceScoreMultiplier + perfectionScoreMultiplier;
 
     }
