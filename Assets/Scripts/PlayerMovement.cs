@@ -74,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
         {
             // Se não está ferido, torna-se ferido e inicia a recuperação
             instance.audioManager.PlayAudio5();
+            instance.Reduce(0.25f);
             isWounded = true;
             StartCoroutine(WoundRecoveryTimer(woundRecoveryTime));
             StartCoroutine(ActivateInvulnerability(invulnerabilityTime)); // Ativa a invulnerabilidade

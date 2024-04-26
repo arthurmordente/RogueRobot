@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public PositionTracker positionTracker;
     public TMP_Text speedDisplay;
     public TMP_Text multiplierDisplay;
+    public TMP_Text accDisplay;
     public GameObject loseScreen;
 
     public float initialSpeed = 1.0f;
@@ -46,6 +47,7 @@ public class GameManager : MonoBehaviour
 
         speedDisplay.text = "Speed: " + currentSpeed.ToString("F2");
         multiplierDisplay.text = "Multiplier: " + scoreMultiplier.ToString("F2");
+        accDisplay.text = "Acc: " + speedIncrement.ToString("F1");
     }
 
     public void HandleSpeed(){
@@ -86,6 +88,18 @@ public class GameManager : MonoBehaviour
         }
         audioManager.PlayAudio4();
     }
+
+    public void Reduce(float ReductionRate)
+    {
+        if (currentSpeed > initialSpeed)
+        {
+            currentSpeed = Mathf.Max(currentSpeed * (1 - ReductionRate), initialSpeed);
+        }
+        Debug.Log("Speed reduced by " + ReductionRate);
+    }
+
+
+
     public void AddPoints(float value)
     {
         value = value * scoreMultiplier * 10;
