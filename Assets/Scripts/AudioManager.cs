@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
@@ -12,9 +13,19 @@ public class AudioManager : MonoBehaviour
     public AudioClip audioHit;
 
     private AudioSource audioSource;
+    [SerializeField] Slider volumeSlider;
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        if(!PlayerPrefs.HasKey("musicVolume"))
+        {
+            PlayerPrefs.SetFloat("musicVolume", 1);
+            Load();
+        }
+        else{
+            Load();
+        }
     }
     public void PlayAudio1()
     {
@@ -45,4 +56,18 @@ public class AudioManager : MonoBehaviour
         audioSource.clip = audioHit;
         audioSource.Play();
     }
+
+    public void ChangeVolume(){
+        AudioListener.volume = volumeSlider.value;
+        Save();
+    }
+
+    public void Load(){
+        volumeSlider.value = PlayerPrefs.GetFloat("musicVolume");
+    }
+
+    private void Save(){
+        PlayerPrefs.SetFloat("musicVolume", volumeSlider.value);
+    }
 }
+
