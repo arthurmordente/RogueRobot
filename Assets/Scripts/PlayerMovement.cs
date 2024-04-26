@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     private float woundRecoveryTime = 15.0f; // Tempo para se recuperar do estado ferido
     private float invulnerabilityTime = 3.0f; // Tempo de invulnerabilidade após ser atingido
 
-    private Renderer playerRenderer;
+    [SerializeField] private Renderer[] playerRenderer;
     private Vector2 touchStart;
     private float touchStartTime;
     bool doubleTapRegistered;
@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         _currentLane = 1; // Configuração inicial da pista
-        playerRenderer = GetComponent<Renderer>();
+        playerRenderer = GetComponentsInChildren<Renderer>();
     }
 
     void Update()
@@ -105,13 +105,20 @@ public class PlayerMovement : MonoBehaviour
         float endTime = Time.time + duration;
         while (Time.time < endTime)
         {
-            if(playerRenderer != null){
-                playerRenderer.enabled = !playerRenderer.enabled; // Alterna a visibilidade
+            foreach (Renderer rend in playerRenderer)
+            {
+                if(rend != null){
+                    rend.enabled = !rend.enabled; // Alterna a visibilidade
+                }
+                
+                yield return new WaitForSeconds(blinkInterval); // Espera pelo intervalo de piscar
             }
-            yield return new WaitForSeconds(blinkInterval); // Espera pelo intervalo de piscar
         }
-        if(playerRenderer != null){
-            playerRenderer.enabled = true;
+        foreach (Renderer rend in playerRenderer)
+        {
+            if(rend != null){
+                rend.enabled = true;
+            }   
         }
     }
 
