@@ -25,6 +25,13 @@ public class PlayerMovement : MonoBehaviour
     private float invulnerabilityTime = 3.0f; // Tempo de invulnerabilidade após ser atingido
 
     private Renderer playerRenderer;
+    private Vector2 touchStart;
+    private float touchStartTime;
+    bool doubleTapRegistered;
+    private float lastTapTime = 0;
+    private const float doubleTapDelta = 0.3f;
+    private bool isTapLong = false;
+
 
     void Start()
     {
@@ -35,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         UpdateMovementSpeed();
-        HandleInput();
+        HandleMobileInput();
     }
 
     void OnTriggerEnter(Collider other)
@@ -126,7 +133,91 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void MoverDireita()
+    private void HandleMobileInput()
+    {
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
+                    touchStart = touch.position;
+                    touchStartTime = Time.time;
+                    
+                    // Reseta o flag de double tap se o tempo entre toques for maior que o permitido para double taps
+                    if (Time.time - lastTapTime > doubleTapDelta)
+                    {
+                        doubleTapRegistered = false;
+                        isTapLong = false;  // Reseta o estado de tap longo
+                    }
+                    break;
+                case TouchPhase.Ended:
+                    if (!doubleTapRegistered && !isTapLong) // Processa como swipe ou tap se não houve double tap ou tap longo anterior
+                    {
+                        float duration = Time.time - touchStartTime;
+                        float distance = (touch.position - touchStart).magnitude;
+
+                        if (duration >= 0.3f && distance < 50f) // Condições para tap longo
+                        {
+                            Acelerar();
+                            isTapLong = true; // Marca que um tap longo foi detectado
+                        }
+                        else if (duration < 0.3f && distance < 50f) // Condições para double tap
+                        {
+                            if (Time.time - lastTapTime < doubleTapDelta)
+                            {
+                                Desacelerar();
+                                doubleTapRegistered = true;
+                                lastTapTime = 0;
+                            }
+                            else
+                            {
+                                lastTapTime = Time.time;
+                            }
+                        }
+                        else
+                        {
+                            ProcessSwipeOrTap(touch.position); // Chama a função de processamento de swipe
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+    private void ProcessSwipeOrTap(Vector2 touchEnd)
+    {
+        if (!isTapLong)  // Só processa swipes se não estiver em um estado de tap longo
+        {
+            float x = touchEnd.x - touchStart.x;
+            float y = touchEnd.y - touchStart.y;
+
+            if (Mathf.Abs(x) > Mathf.Abs(y))
+            {
+                if (x > 0) MoverDireita();
+                else MoverEsquerda();
+            }
+            else
+            {
+                if (y > 0) Pular();
+                else Slide();
+            }
+        }
+    }
+
+    public void Acelerar()
+    {
+        // Implement the logic for acceleration here
+        Debug.Log("Acelerando");
+    }
+
+    public void Desacelerar()
+    {
+        // Implement the logic for deceleration here
+        Debug.Log("Desacelerando");
+    }
+    
+    private void MoverDireita()
     {
         _currentLane++;
         if (_currentLane >= lanes.Length)
@@ -138,7 +229,7 @@ public class PlayerMovement : MonoBehaviour
         transform.position = new Vector3(x, transform.position.y, transform.position.z);
     }
 
-    public void MoverEsquerda()
+    private void MoverEsquerda()
     {
         _currentLane--;
         if (_currentLane < 0)
@@ -150,7 +241,7 @@ public class PlayerMovement : MonoBehaviour
         transform.position = new Vector3(x, transform.position.y, transform.position.z);
     }
 
-    public void Pular()
+    private void Pular()
     {
         if (!isJumping && !isSliding)
         {
@@ -181,7 +272,7 @@ public class PlayerMovement : MonoBehaviour
         isJumping = false;
     }
 
-    public void Slide()
+    private void Slide()
     {
         if (!isSliding && !isJumping)
         {
