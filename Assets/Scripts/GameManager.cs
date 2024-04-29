@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text speedDisplay;
     public TMP_Text multiplierDisplay;
     public TMP_Text accDisplay;
+    public TMP_Text distanceDisplay;
     public GameObject loseScreen;
 
     public float initialSpeed = 1.0f;
@@ -48,6 +49,7 @@ public class GameManager : MonoBehaviour
         speedDisplay.text = "Speed: " + currentSpeed.ToString("F2");
         multiplierDisplay.text = "Multiplier: " + scoreMultiplier.ToString("F2");
         accDisplay.text = "Acc: " + speedIncrement.ToString("F1");
+        distanceDisplay.text = "Distance: " + positionTracker.sectionDistance.ToString("");
     }
 
     public void HandleSpeed(){
