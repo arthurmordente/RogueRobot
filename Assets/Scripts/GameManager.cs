@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -13,7 +14,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text accDisplay;
     public TMP_Text distanceDisplay;
     public GameObject loseScreen;
-
+    public bool isPaused;
     public float initialSpeed = 1.0f;
     public float maxSpeed = 6.0f;
     public float speedIncrement = 0.1f;
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
 
     void Start(){
         currentSpeed = initialSpeed;
+        isPaused = false;
     }
     void Update()
     {
@@ -114,6 +116,24 @@ public class GameManager : MonoBehaviour
         AddPoints(value);
         audioManager.PlayAudio1();
     }
+
+    public void PauseGame(){
+        Time.timeScale = 0.0f;
+        isPaused = true;
+    }
+
+    public void UnpauseGame(){
+        StartCoroutine(UnpauseGameCoroutine());
+    }
+
+    // Corrotina que realiza o atraso
+    private IEnumerator UnpauseGameCoroutine()
+    {
+        Time.timeScale = 1.0f; // Retoma o tempo do jogo imediatamente
+        yield return new WaitForSeconds(0.3f); // Espera por 0.3 segundos
+        isPaused = false; // Muda o estado da variável após o atraso
+    }
+
 
     public void GameOver()
     {

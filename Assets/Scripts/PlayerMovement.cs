@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEngine.EventSystems;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -169,6 +170,9 @@ public class PlayerMovement : MonoBehaviour
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
+            if (EventSystem.current.IsPointerOverGameObject(touch.fingerId)) {
+                return; // Ignora o toque se estiver sobre um objeto de UI
+            }
             switch (touch.phase)
             {
                 case TouchPhase.Began:
@@ -208,7 +212,9 @@ public class PlayerMovement : MonoBehaviour
                         }
                         else
                         {
-                            ProcessSwipeOrTap(touch.position); // Chama a função de processamento de swipe
+                            if(instance.isPaused == false){
+                                ProcessSwipeOrTap(touch.position); // Chama a função de processamento de swipe
+                            }
                         }
                     }
                     break;
