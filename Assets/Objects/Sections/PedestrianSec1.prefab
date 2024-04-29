@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6410125313998910738}
   - component: {fileID: 1548270712296092324}
   m_Layer: 0
-  m_Name: Section (6)
+  m_Name: PedestrianSec1
   m_TagString: Section
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
