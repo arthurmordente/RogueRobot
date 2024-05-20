@@ -11,6 +11,7 @@ public class PositionTracker : MonoBehaviour
 
     public float playerSection = 0f;  // Representa a seção atual do jogador como um float
     public float enemySection = 0f;   // Representa a seção atual do inimigo como um float
+    public float currentDistance;
     public int lastScoredSection = 0;
     public int lastHitSection = 0;
     public int sectionDistance;       // Distância entre seções como um inteiro aproximado
@@ -25,9 +26,9 @@ public class PositionTracker : MonoBehaviour
         // Atualiza as seções baseadas na posição Z atual
         playerSection = CalculateSection(playerTransform.position.z);
         enemySection = CalculateSection(enemyTransform.position.z);
-
-        // Atualiza a distância entre seções
         sectionDistance = CalculateSectionDistance(playerSection, enemySection);
+
+        currentDistance = playerSection - enemySection;
 
         CheckDefeat();
 
