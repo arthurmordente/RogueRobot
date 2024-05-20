@@ -15,6 +15,7 @@ public class EnemyMovement : MonoBehaviour
     public int skillNumber = 0;
     public float skillCooldown = 5.0f; // Tempo em segundos entre cada habilidade
     public float lastScoreCheck = 0; // Última pontuação verificada para aumento de velocidade
+    float currentScore = 0;
 
     void Start()
     {
@@ -34,21 +35,28 @@ public class EnemyMovement : MonoBehaviour
             transform.position = new Vector3(playerTransform.position.x, playerTransform.position.y, newZPosition);
 
             // Ajuste de velocidade baseado na pontuação
-            float currentScore = instance.scoreManager.GetScore(); // Obter a pontuação como um float
-            if (Mathf.Floor(currentScore / 500) > Mathf.Floor(lastScoreCheck / 500))
-            {
-                originalSpeed += 1f; // Aumenta a velocidade original a cada 500 pontos
-                speed = originalSpeed; // Atualiza a velocidade atual
-                lastScoreCheck = currentScore; // Atualiza a pontuação de referência para a base atual de 500 pontos
+            currentScore = instance.scoreManager.GetScore(); // Obter a pontuação como um float
+            while(originalSpeed < 15){
+                if (Mathf.Floor(currentScore / 500) > Mathf.Floor(lastScoreCheck / 500))
+                {
+                    SpeedUp();
+                }
             }
-
-            // Verificação para resetar a velocidade se a habilidade 6 estiver ativa e a condição for satisfeita
+            
             if (skillNumber == 6 && Vector3.Distance(transform.position, playerTransform.position) <= 5)
             {
                 speed = originalSpeed; // Reset the speed when close enough
             }
+
         }
     }
+
+    void SpeedUp(){
+        originalSpeed += 1f; // Aumenta a velocidade original a cada 500 pontos
+        speed = originalSpeed; // Atualiza a velocidade atual
+        lastScoreCheck = currentScore; // Atualiza a pontuação de referência para a base atual de 500 pontos
+    }
+
     IEnumerator ActivateSkills()
     {
         while (true)
