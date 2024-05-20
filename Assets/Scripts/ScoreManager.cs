@@ -13,6 +13,10 @@ public class ScoreManager : MonoBehaviour
     
     private float score = 0; // Score atual
 
+    public float GetScore(){
+        return score;
+    }
+
     public void AddPoints(float value)
     {
         score += value;

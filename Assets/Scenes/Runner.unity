@@ -503,9 +503,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d3c7068dd6f75d41a93a0fc227fbddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  instance: {fileID: 0}
   playerTransform: {fileID: 1511572085}
   speed: 4
+  originalSpeed: 0
   followDistance: -10
+  playerController: {fileID: 0}
+  skillCooldown: 5
 --- !u!1 &172528884
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,7 +820,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 112.3, y: 56.3}
+  m_AnchoredPosition: {x: 112.30005, y: 56.30005}
   m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &211196587
@@ -4411,6 +4415,7 @@ MonoBehaviour:
   slideDuration: 1
   isInvulnerable: 0
   isWounded: 0
+  isBlocked: 0
   playerRenderer: []
 --- !u!136 &1511572082
 CapsuleCollider:

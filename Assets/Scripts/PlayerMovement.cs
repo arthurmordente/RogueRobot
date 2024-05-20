@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumping = false;
     public bool isInvulnerable = false;
     public bool isWounded = false;
+    public bool isBlocked = false;
     private float woundRecoveryTime = 15.0f; // Tempo para se recuperar do estado ferido
     private float invulnerabilityTime = 3.0f; // Tempo de invulnerabilidade após ser atingido
 
@@ -242,14 +243,31 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void ToggleBlock()
+        {
+            isBlocked = !isBlocked; // Alterna o estado de bloqueio
+            Debug.Log("Block status changed: " + (isBlocked ? "Blocked" : "Unblocked"));
+        }
+
+
     public void Acelerar()
     {
+        if (isBlocked) // Verifica se o bloqueio está ativo
+        {
+            Debug.Log("Acceleration blocked!");
+            return;
+        }
         Debug.Log("Acelerando");
         instance.Accelerate();
     }
 
     public void Desacelerar()
     {
+        if (isBlocked) // Verifica se o bloqueio está ativo
+        {
+            Debug.Log("Deceleration blocked!");
+            return;
+        }
         Debug.Log("Desacelerando");
         instance.Reduce();
     }
