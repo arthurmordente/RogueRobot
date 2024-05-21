@@ -36,12 +36,11 @@ public class EnemyMovement : MonoBehaviour
 
             // Ajuste de velocidade baseado na pontuação
             currentScore = instance.scoreManager.GetScore(); // Obter a pontuação como um float
-            while(originalSpeed < 15){
-                if (Mathf.Floor(currentScore / 500) > Mathf.Floor(lastScoreCheck / 500))
-                {
-                    SpeedUp();
-                }
+            if (Mathf.Floor(currentScore / 500) > Mathf.Floor(lastScoreCheck / 500))
+            {
+                SpeedUp();
             }
+
             
             if (skillNumber == 6 && Vector3.Distance(transform.position, playerTransform.position) <= 5)
             {

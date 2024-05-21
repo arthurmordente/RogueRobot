@@ -54,6 +54,16 @@ public class GameManager : MonoBehaviour
         distanceDisplay.text = "Distance: " + positionTracker.sectionDistance.ToString("");
     }
 
+    public float GetCurrentSpeed(){
+        return currentSpeed;
+    }
+
+     public float GetCurrentAcceleration(){
+        return speedIncrement;
+    }
+
+
+
     public void HandleSpeed(){
         if (currentSpeed < maxSpeed && currentSpeed >= 1.0f)
         {
