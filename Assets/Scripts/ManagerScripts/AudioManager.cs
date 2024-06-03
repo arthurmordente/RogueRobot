@@ -11,6 +11,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip audioCoin;
     public AudioClip audioSkill;
     public AudioClip audioHit;
+    public AudioClip audioMenu;
+    public AudioClip audioMenu2;
 
     private AudioSource audioSource;
     [SerializeField] Slider volumeSlider;
@@ -57,6 +59,17 @@ public class AudioManager : MonoBehaviour
         audioSource.Play();
     }
 
+    public void PlayMenuAudio()
+    {
+        audioSource.clip = audioMenu;
+        audioSource.Play();
+    }
+
+    public void PlayMenuAudio2()
+    {
+        audioSource.clip = audioMenu2;
+        audioSource.Play();
+    }
     public void ChangeVolume(){
         AudioListener.volume = volumeSlider.value;
         Save();
