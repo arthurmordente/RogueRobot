@@ -13,7 +13,7 @@ public class EnemyMovement : MonoBehaviour
     public PlayerMovement playerController; // Referência ao controlador do jogador
 
     public int skillNumber = 0;
-    public float skillCooldown = 5.0f; // Tempo em segundos entre cada habilidade
+    public float skillCooldown = 7.5f; // Tempo em segundos entre cada habilidade
     public float lastScoreCheck = 0; // Última pontuação verificada para aumento de velocidade
     float currentScore = 0;
 
@@ -60,8 +60,8 @@ public class EnemyMovement : MonoBehaviour
     {
         while (true)
         {
-            ActivateSkill();
             yield return new WaitForSeconds(skillCooldown);
+            ActivateSkill();
         }
     }
 
