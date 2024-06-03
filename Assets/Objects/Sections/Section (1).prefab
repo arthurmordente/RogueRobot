@@ -206,6 +206,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Obstaculo1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8ad3333f4def4444c843c62f0ba6346f,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ad3333f4def4444c843c62f0ba6346f, type: 3}
 --- !u!1 &320053889351593867 stripped
@@ -319,6 +324,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Lixeira
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4cdaeb37351339d4796b2fb8b8249bc7,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4cdaeb37351339d4796b2fb8b8249bc7, type: 3}
@@ -434,6 +444,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Obstaculo1 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8ad3333f4def4444c843c62f0ba6346f,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ad3333f4def4444c843c62f0ba6346f, type: 3}
 --- !u!1 &4013518494326161103 stripped
@@ -547,6 +562,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Obstaculo1 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8ad3333f4def4444c843c62f0ba6346f,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ad3333f4def4444c843c62f0ba6346f, type: 3}
@@ -662,6 +682,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Obstaculo1 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8ad3333f4def4444c843c62f0ba6346f,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ad3333f4def4444c843c62f0ba6346f, type: 3}
 --- !u!1 &7468165960024621335 stripped
@@ -770,6 +795,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PneuObstaculo
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 488b695b0d8cf78448a7680a264a255e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 488b695b0d8cf78448a7680a264a255e, type: 3}
