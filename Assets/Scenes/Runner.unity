@@ -2287,8 +2287,8 @@ RectTransform:
   m_GameObject: {fileID: 549861033}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1326784144}
   m_RootOrder: 0
@@ -4879,7 +4879,7 @@ RectTransform:
   m_GameObject: {fileID: 1326784143}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 549861034}
@@ -4888,7 +4888,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -843.7, y: 372.57}
+  m_AnchoredPosition: {x: -955.39, y: 465.6}
   m_SizeDelta: {x: 225, y: 225}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1326784145
@@ -4904,8 +4904,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointer: {fileID: 549861035}
-  minPointerAngle: 145
-  maxPointerAngle: -145
+  minPointerAngle: 75
+  maxPointerAngle: -75
   minSpeed: 1
   maxSpeed: 6
   accelerationColors:
@@ -4934,7 +4934,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a5472921f25231b47b810cdf95cabb0e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8797ec5172bfe414c8512bb695e2bbf1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
