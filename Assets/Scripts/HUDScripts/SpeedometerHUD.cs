@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class SpeedometerHUD : MonoBehaviour
 {
     public Image pointer;
+    public GameObject blocked;
     public float minPointerAngle = 145.0f;
     public float maxPointerAngle = -145.0f;
     public float minSpeed = 1.0f;
@@ -35,4 +36,11 @@ public class SpeedometerHUD : MonoBehaviour
         int colorIndex = (int)((acceleration + 0.2f) * 10); // Mapeia [-0.2, -0.1, 0, 0.1, 0.2] para [0, 1, 2, 3, 4]
         pointer.color = accelerationColors[colorIndex];
     }
+
+
+    
+    public void BlockHUD(){
+        blocked.SetActive(!blocked.activeSelf);
+    }
+
 }

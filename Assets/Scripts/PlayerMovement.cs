@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 5.0f; // Velocidade do jogador
     public GameManager instance;
     public PositionTracker posTracker;
+    public SpeedometerHUD velocimeter;
 
     // Variáveis de movimento
     public float jumpHeight = 3.5f;
@@ -246,6 +247,7 @@ public class PlayerMovement : MonoBehaviour
     public void ToggleBlock()
         {
             isBlocked = !isBlocked; // Alterna o estado de bloqueio
+            velocimeter.BlockHUD();
             Debug.Log("Block status changed: " + (isBlocked ? "Blocked" : "Unblocked"));
         }
 
