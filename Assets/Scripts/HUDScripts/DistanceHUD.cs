@@ -24,6 +24,9 @@ public class DistanceHUD : MonoBehaviour
     {
         // Obtenha a distância atual que varia de 1 a 6
         float currentDistance = instance.positionTracker.currentDistance;
+        if (currentDistance >= 7){
+            currentDistance = 6;
+        }
         // Calcula a nova largura baseada nessa distância
         float newWidth = Mathf.Lerp(60f, 300f, currentDistance  / 6);
 

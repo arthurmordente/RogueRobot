@@ -347,7 +347,7 @@ public class PlayerMovement : MonoBehaviour
         float originalY = transform.position.y;
         float targetY = originalY - 0.5f; // Diminui a altura do deslize
 
-        transform.Rotate(90f, 0f, 0f); // Rotaciona o objeto 90 graus no eixo X
+        transform.Rotate(-90f, 0f, 0f); // Rotaciona o objeto 90 graus no eixo X
 
         while (transform.position.y > targetY)
         {
@@ -358,7 +358,7 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(slideDuration);
 
-        transform.Rotate(-90f, 0f, 0f); // Restaura a rotação original do objeto
+        transform.Rotate(90f, 0f, 0f); // Restaura a rotação original do objeto
 
         while (transform.position.y < originalY)
         {
