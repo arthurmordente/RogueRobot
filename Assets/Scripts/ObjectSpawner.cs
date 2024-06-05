@@ -34,8 +34,6 @@ public class ObjectSpawner : MonoBehaviour
         // Instancia o prefab com a posição e rotação definidas
         GameObject clone = Instantiate(prefabs[index], pos, rotation);
         DestroyObject scriptDoObjeto = clone.GetComponent<DestroyObject>();
-        if(scriptDoObjeto != null){
-            scriptDoObjeto.playerPos = jogadorTransform;
-        }
+        scriptDoObjeto.playerPos = jogadorTransform;
     }
 }

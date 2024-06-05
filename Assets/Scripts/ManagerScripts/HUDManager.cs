@@ -6,9 +6,6 @@ using UnityEngine;
 public class HUDManager : MonoBehaviour
 {
     public GameObject configScreen;
-
-    public GameObject helpScreen;
-
     public void StartGame()
     {
         SceneManager.LoadScene("Runner");
@@ -25,13 +22,5 @@ public class HUDManager : MonoBehaviour
 
     public void CloseConfigScreen(){
         configScreen.SetActive(false);
-    }
-
-    public void OpenHelpScreen(){
-        helpScreen.SetActive(true);
-    }
-
-    public void CloseHelpScreen(){
-        helpScreen.SetActive(false);
     }
 }
