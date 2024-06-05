@@ -67,6 +67,9 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMenuAudio2()
     {
+        Debug.Log("AudioSource: " + (audioSource == null ? "NULL" : "OK"));
+        Debug.Log("AudioClip: " + (audioMenu2 == null ? "NULL" : "OK"));
+        if (audioSource == null || audioMenu2 == null) return;
         audioSource.clip = audioMenu2;
         audioSource.Play();
     }
