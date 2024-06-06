@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
+
     public GameManager instance;
     public float initialSpeed = 3.0f;
     public float speed;
@@ -17,6 +18,6 @@ public class CameraMovement : MonoBehaviour
     void Update()
     {
         speed = initialSpeed * instance.currentSpeed;
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        transform.Translate(Vector3.forward * speed * Time.deltaTime); 
     }
 }

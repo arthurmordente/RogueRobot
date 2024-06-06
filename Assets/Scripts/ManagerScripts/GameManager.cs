@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
+    public PlayerMovement player;
     public AudioManager audioManager;
     public ScoreManager scoreManager;
     public PositionTracker positionTracker;
@@ -65,7 +67,10 @@ public class GameManager : MonoBehaviour
 
 
     public void HandleSpeed(){
-        if (currentSpeed < maxSpeed && currentSpeed >= 1.0f)
+        if(player.isDead){
+            currentSpeed = 0;
+        }
+        else if (currentSpeed < maxSpeed && currentSpeed >= 1.0f)
         {
             currentSpeed += speedIncrement * Time.deltaTime;
         }
@@ -148,6 +153,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         Time.timeScale = 0f;
+        player.isDead = true;
         scoreManager.UpdateTopScores();
     }
 

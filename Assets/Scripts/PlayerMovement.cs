@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isInvulnerable = false;
     public bool isWounded = false;
     public bool isBlocked = false;
+    public bool isDead = false;
     private float woundRecoveryTime = 15.0f; // Tempo para se recuperar do estado ferido
     private float invulnerabilityTime = 3.0f; // Tempo de invulnerabilidade após ser atingido
 
@@ -40,13 +41,16 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         _currentLane = 1; // Configuração inicial da pista
+        isDead = false;
         playerRenderer = GetComponentsInChildren<Renderer>();
     }
 
     void Update()
     {
+        if(!isDead){
         UpdateMovementSpeed();
         HandleMobileInput();
+        }
     }
 
     void OnTriggerEnter(Collider other)

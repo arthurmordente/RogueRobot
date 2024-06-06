@@ -27,7 +27,7 @@ public class EnemyMovement : MonoBehaviour
 
     void Update()
     {
-        if (positionTracker != null)
+        if (positionTracker != null && !playerController.isDead)
         {
             // Movimentação padrão do inimigo
             float targetZ = playerTransform.position.z - followDistance;
