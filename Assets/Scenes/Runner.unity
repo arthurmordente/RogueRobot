@@ -1303,7 +1303,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabs:
   - {fileID: 7600196345023831264, guid: e799c94d5d458fc4fbb3d6ed09550ab4, type: 3}
-  - {fileID: 5484154193542678322, guid: 00ace4f9ffa15644e932512427470bee, type: 3}
   lanes:
   - -6.66
   - 0
@@ -1783,6 +1782,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   configScreen: {fileID: 1865024527}
+  helpScreen: {fileID: 0}
 --- !u!1 &431390349
 GameObject:
   m_ObjectHideFlags: 0

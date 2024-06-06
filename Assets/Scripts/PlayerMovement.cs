@@ -344,31 +344,44 @@ public class PlayerMovement : MonoBehaviour
     }
 
     IEnumerator SlideRoutine()
+{
+    isSliding = true;
+    float originalY = transform.position.y;
+    float targetY = originalY - 0.15f; // Diminui a altura do deslize
+
+    // Rotaciona o objeto 90 graus no eixo X
+    transform.Rotate(-90f, 0f, 0f);
+
+    // Duração fixa para mover para a posição de deslizamento
+    float slideDownDuration = 0.25f; // Ajuste conforme necessário
+    float slideTimer = 0f;
+
+    while (slideTimer < slideDownDuration)
     {
-        isSliding = true;
-        float originalY = transform.position.y;
-        float targetY = originalY - 0.5f; // Diminui a altura do deslize
-
-        transform.Rotate(-90f, 0f, 0f); // Rotaciona o objeto 90 graus no eixo X
-
-        while (transform.position.y > targetY)
-        {
-            float newY = Mathf.MoveTowards(transform.position.y, targetY, Time.deltaTime);
-            transform.position = new Vector3(transform.position.x, newY, transform.position.z);
-            yield return null;
-        }
-
-        yield return new WaitForSeconds(slideDuration);
-
-        transform.Rotate(90f, 0f, 0f); // Restaura a rotação original do objeto
-
-        while (transform.position.y < originalY)
-        {
-            float newY = Mathf.MoveTowards(transform.position.y, originalY, Time.deltaTime);
-            transform.position = new Vector3(transform.position.x, newY, transform.position.z);
-            yield return null;
-        }
-
-        isSliding = false;
+        slideTimer += Time.deltaTime;
+        float newY = Mathf.Lerp(originalY, targetY, slideTimer / slideDownDuration);
+        transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+        yield return null;
     }
+
+    // Espera pela duração do deslize sem alterar a posição Y
+    yield return new WaitForSeconds(slideDuration);
+
+    // Duração fixa para retornar à posição original
+    float slideUpDuration = 0.25f; // Ajuste conforme necessário
+    slideTimer = 0f;
+
+    while (slideTimer < slideUpDuration)
+    {
+        slideTimer += Time.deltaTime;
+        float newY = Mathf.Lerp(targetY, originalY, slideTimer / slideUpDuration);
+        transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+        yield return null;
+    }
+
+    // Restaura a rotação original do objeto
+    transform.Rotate(90f, 0f, 0f);
+
+    isSliding = false;
+}
 }
