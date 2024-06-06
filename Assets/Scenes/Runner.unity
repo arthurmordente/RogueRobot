@@ -1682,6 +1682,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab73a49f2529c18409b5862c79691d56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1511572081}
   audioManager: {fileID: 1775444546}
   scoreManager: {fileID: 417775879}
   positionTracker: {fileID: 417775880}
@@ -5271,6 +5272,7 @@ MonoBehaviour:
   isInvulnerable: 0
   isWounded: 0
   isBlocked: 0
+  isDead: 0
   playerRenderer: []
 --- !u!136 &1511572082
 CapsuleCollider:
