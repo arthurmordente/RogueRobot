@@ -9,6 +9,10 @@ public class HUDManager : MonoBehaviour
 
     public GameObject helpScreen;
 
+    public GameObject achvScreen;
+
+    public GameObject creditsScreen;
+
     public void StartGame()
     {
         SceneManager.LoadScene("Runner");
@@ -33,5 +37,21 @@ public class HUDManager : MonoBehaviour
 
     public void CloseHelpScreen(){
         helpScreen.SetActive(false);
+    }
+
+    public void OpenAchvScreen(){
+       achvScreen.SetActive(true);
+    }
+
+    public void CloseAchvScreen(){
+       achvScreen.SetActive(false);
+    }
+
+    public void OpenCreditsScreen(){
+        creditsScreen.SetActive(true);
+    }
+
+    public void CloseCreditsScreen(){
+        creditsScreen.SetActive(false);
     }
 }
