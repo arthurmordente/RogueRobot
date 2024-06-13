@@ -1,20 +1,60 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using TMPro;
+
+[Serializable]
+public class ScoreEntry
+{
+    public float score;
+    public string playerName;
+    public float multiplier;
+}
+
+[Serializable]
+public class ScoreData
+{
+    public List<ScoreEntry> topScores = new List<ScoreEntry>();
+}
 
 public class ScoreManager : MonoBehaviour
 {
     public GameManager instance;
     public AudioManager audioManager;
     public TMP_Text[] topScoreTexts; // Referências para os elementos de UI dos top scores
-    public TMP_Text scoreText; // Referência para o elemento de UI do score atual
+    public TMP_Text scoreText;
     public TMP_InputField playerNameInput; // Campo de entrada para o nome do jogador
     public GameObject scoreScreen; // Tela para exibir os top scores
-    public GameObject getInputSceen; // Tela para capturar o nome do jogador
+    public GameObject getInputScreen; // Tela para capturar o nome do jogador
     
     private float score = 0; // Score atual
+    private ScoreData scoreData;
+    private string filePath;
 
-    public float GetScore(){
-        return score;
+    void Start()
+    {
+        filePath = Path.Combine(Application.persistentDataPath, "scoreData.json");
+        LoadScores();
+    }
+
+    private void LoadScores()
+    {
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath);
+            scoreData = JsonUtility.FromJson<ScoreData>(json);
+        }
+        else
+        {
+            scoreData = new ScoreData(); // Inicia um novo conjunto de dados de pontuação se o arquivo não existir
+        }
+    }
+
+    private void SaveScores()
+    {
+        string json = JsonUtility.ToJson(scoreData, true);
+        File.WriteAllText(filePath, json);
     }
 
     public void AddPoints(float value)
@@ -23,31 +63,22 @@ public class ScoreManager : MonoBehaviour
         scoreText.text = "Score: " + score.ToString("F0");
     }
 
-    public void ResetScores()
-    {
-        PlayerPrefs.DeleteAll();
-        PlayerPrefs.Save(); // Garante que a remoção seja aplicada imediatamente
-        Debug.Log("PlayerPrefs foram resetados.");
+    public float GetScore(){
+        return score;
     }
 
     public void UpdateTopScores()
     {
-        float[] topScores = new float[3];
-        string[] topPlayers = new string[3];
-        float[] topMultipliers = new float[3]; // Nova matriz para armazenar os multiplicadores
+        ScoreEntry newEntry = new ScoreEntry { score = score, playerName = "", multiplier = instance.scoreMultiplier };
+
+        // Determina se o novo score é um high score
         bool newHighScore = false;
         int newScoreIndex = -1;
 
-        for (int i = 0; i < topScores.Length; i++)
+        // Percorre a lista de scores existente para encontrar a posição correta do novo score
+        for (int i = 0; i < scoreData.topScores.Count; i++)
         {
-            topScores[i] = PlayerPrefs.GetFloat("TopScore" + i, 0);
-            topPlayers[i] = PlayerPrefs.GetString("TopPlayer" + i, "---");
-            topMultipliers[i] = PlayerPrefs.GetFloat("TopMultiplier" + i, 1); // Padrão é 1 se não houver nada salvo
-        }
-
-        for (int i = 0; i < topScores.Length; i++)
-        {
-            if (score > topScores[i])
+            if (score > scoreData.topScores[i].score)
             {
                 newHighScore = true;
                 newScoreIndex = i;
@@ -55,27 +86,45 @@ public class ScoreManager : MonoBehaviour
             }
         }
 
+        // Se for um novo high score, inserimos na posição correta
         if (newHighScore)
         {
-            audioManager.PlayAudio3();
-            for (int j = topScores.Length - 1; j > newScoreIndex; j--)
+            // Se há espaço na lista ou se é necessário substituir o menor score
+            if (scoreData.topScores.Count < 3) // Supondo que você deseja manter os 3 melhores scores
             {
-                topScores[j] = topScores[j - 1];
-                topPlayers[j] = topPlayers[j - 1];
-                topMultipliers[j] = topMultipliers[j - 1];
+                scoreData.topScores.Insert(newScoreIndex, newEntry);
+            }
+            else
+            {
+                // Desloca os scores para baixo para fazer espaço para o novo score
+                for (int j = scoreData.topScores.Count - 1; j > newScoreIndex; j--)
+                {
+                    scoreData.topScores[j] = scoreData.topScores[j - 1];
+                }
+                scoreData.topScores[newScoreIndex] = newEntry;
             }
 
-            topScores[newScoreIndex] = score;
-            topMultipliers[newScoreIndex] = instance.scoreMultiplier; // Salva o multiplicador atual junto com o score
-            getInputSceen.SetActive(true);
+            // Ativa a tela para capturar o nome do jogador
+            getInputScreen.SetActive(true);
             playerNameInput.Select();
             playerNameInput.ActivateInputField();
 
             playerNameInput.onEndEdit.RemoveAllListeners();
-            playerNameInput.onEndEdit.AddListener(delegate { OnEndEditPlayerName(score, newScoreIndex, topScores, topPlayers, topMultipliers); });
+            playerNameInput.onEndEdit.AddListener(delegate { OnEndEditPlayerName(score, newScoreIndex); });
+        }
+        else if (scoreData.topScores.Count < 3) // Caso não seja maior, mas ainda há espaço na lista
+        {
+            scoreData.topScores.Add(newEntry);
+            getInputScreen.SetActive(true);
+            playerNameInput.Select();
+            playerNameInput.ActivateInputField();
+
+            playerNameInput.onEndEdit.RemoveAllListeners();
+            playerNameInput.onEndEdit.AddListener(delegate { OnEndEditPlayerName(score, scoreData.topScores.Count - 1); });
         }
         else
         {
+            // Não é um high score e a lista está cheia
             instance.displayLoseScreen();
             audioManager.PlayAudio2();
         }
@@ -83,46 +132,51 @@ public class ScoreManager : MonoBehaviour
 
     public void DisplayTopScores()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < topScoreTexts.Length; i++)
         {
-            float score = PlayerPrefs.GetFloat("TopScore" + i, 0);
-            string player = PlayerPrefs.GetString("TopPlayer" + i, "---");
-            float multiplier = PlayerPrefs.GetFloat("TopMultiplier" + i, 1); // Recupera o multiplicador
-
-            // Atualiza o texto para incluir o multiplicador
-            topScoreTexts[i].text = player + " - " + score.ToString("F0") /*+ " - x" + multiplier.ToString("F2")*/;
+            if (i < scoreData.topScores.Count)
+            {
+                topScoreTexts[i].text = scoreData.topScores[i].playerName + " - " + scoreData.topScores[i].score.ToString("F0");
+            }
         }
         scoreScreen.SetActive(true);
     }
 
-    private void OnEndEditPlayerName(float newScore, int newScoreIndex, float[] topScores, string[] topPlayers, float[] topMultipliers)
+    private void OnEndEditPlayerName(float newScore, int newScoreIndex)
     {
         string playerName = playerNameInput.text.ToUpper();
 
         if (playerName.Length == 3)
         {
-            topPlayers[newScoreIndex] = playerName;
-            PlayerPrefs.SetFloat("TopScore" + newScoreIndex, newScore);
-            PlayerPrefs.SetString("TopPlayer" + newScoreIndex, playerName);
-            PlayerPrefs.SetFloat("TopMultiplier" + newScoreIndex, topMultipliers[newScoreIndex]); // Salva o novo multiplicador
-
-            for (int i = 0; i < topScores.Length; i++)
-            {
-                PlayerPrefs.SetFloat("TopScore" + i, topScores[i]);
-                PlayerPrefs.SetString("TopPlayer" + i, topPlayers[i]);
-                PlayerPrefs.SetFloat("TopMultiplier" + i, topMultipliers[i]); // Salva todos os multiplicadores
-            }
-
-            PlayerPrefs.Save();
-            Debug.Log("Novos top Scores foram alcançados");
+            scoreData.topScores[newScoreIndex].playerName = playerName;
+            SaveScores();
+            Debug.Log("Novos top Scores foram salvos.");
         }
         else
         {
             Debug.LogError("O nome do jogador deve ter exatamente 3 letras. Tente novamente.");
         }
 
-        getInputSceen.SetActive(false);
+        getInputScreen.SetActive(false);
         playerNameInput.text = ""; // Limpa o campo de entrada após o uso
         instance.displayLoseScreen();
     }
+
+    public void ResetScores()
+    {
+        // Limpa a lista de top scores
+        scoreData.topScores.Clear();
+        
+        // Salva a lista vazia no arquivo JSON para persistir a remoção
+        SaveScores();
+        
+        Debug.Log("Todos os scores foram resetados.");
+
+        // Atualiza a interface do usuário para refletir a lista vazia
+        foreach (TMP_Text scoreText in topScoreTexts)
+        {
+            scoreText.text = "---";
+        }
+    }
+
 }

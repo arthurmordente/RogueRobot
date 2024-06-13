@@ -1746,7 +1746,7 @@ MonoBehaviour:
   scoreText: {fileID: 1492536607}
   playerNameInput: {fileID: 1202306298}
   scoreScreen: {fileID: 1998586785}
-  getInputSceen: {fileID: 1451253036}
+  getInputScreen: {fileID: 1451253036}
 --- !u!114 &417775880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1784,6 +1784,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   configScreen: {fileID: 1865024527}
   helpScreen: {fileID: 0}
+  achvScreen: {fileID: 0}
+  creditsScreen: {fileID: 0}
 --- !u!1 &431390349
 GameObject:
   m_ObjectHideFlags: 0
@@ -3339,7 +3341,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ABC - 100
+  m_text: --- - 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3923,7 +3925,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ABC - 1000
+  m_text: --- - 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6882,7 +6884,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ABC - 10
+  m_text: --- - 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7464,7 +7466,7 @@ MonoBehaviour:
   scoreText: {fileID: 1492536607}
   playerNameInput: {fileID: 1202306298}
   scoreScreen: {fileID: 1998586785}
-  getInputSceen: {fileID: 1451253036}
+  getInputScreen: {fileID: 1451253036}
 --- !u!1001 &2001679918
 PrefabInstance:
   m_ObjectHideFlags: 0
