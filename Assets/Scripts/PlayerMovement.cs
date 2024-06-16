@@ -19,6 +19,9 @@ public class PlayerMovement : MonoBehaviour
     public float jumpSpeed = 4.0f;
     public float slideDuration = 1.0f;
 
+    //Váriaveis de animação
+    private Animator anim;
+
     // Estados do jogador
     private bool isSliding = false;
     private bool isJumping = false;
@@ -313,6 +316,7 @@ public class PlayerMovement : MonoBehaviour
         if (!isJumping && !isSliding)
         {
             StartCoroutine(JumpRoutine());
+            anim.SetBool("Pulando", true);     //Animação de pular(caio)
         }
     }
 
@@ -344,6 +348,7 @@ public class PlayerMovement : MonoBehaviour
         if (!isSliding && !isJumping)
         {
             StartCoroutine(SlideRoutine());
+            anim.SetBool("Slide", true);        //Animação de slide(caio)
         }
     }
 
