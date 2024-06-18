@@ -316,7 +316,7 @@ public class PlayerMovement : MonoBehaviour
         if (!isJumping && !isSliding)
         {
             StartCoroutine(JumpRoutine());
-            anim.SetBool("Pulando", true);     //Animação de pular(caio)
+            //anim.SetBool("Pulando", true);     //Animação de pular(caio)
         }
     }
 
@@ -348,7 +348,7 @@ public class PlayerMovement : MonoBehaviour
         if (!isSliding && !isJumping)
         {
             StartCoroutine(SlideRoutine());
-            anim.SetBool("Slide", true);        //Animação de slide(caio)
+            //anim.SetBool("Slide", true);        //Animação de slide(caio)
         }
     }
 
