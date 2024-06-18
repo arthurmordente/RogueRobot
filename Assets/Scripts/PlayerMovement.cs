@@ -50,9 +50,15 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if(!isDead){
-        UpdateMovementSpeed();
-        HandleMobileInput();
+        if(!isDead)
+        {
+            UpdateMovementSpeed();
+            HandleMobileInput();
+        }
+        if (isDead)
+        {
+            animationManager.SetDeathAnimation(true);
+            return;
         }
     }
 
@@ -313,10 +319,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Pular()
     {
-        if (!isJumping && !isSliding)
+        if (!isJumping && !isSliding && !isDead)
         {
             StartCoroutine(JumpRoutine());
-            //animationManager.PlayJumpAnimation();
+            animationManager.PlayJumpAnimation();
         }
     }
 
@@ -345,7 +351,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Slide()
     {
-        if (!isSliding && !isJumping)
+        if (!isSliding && !isJumping && !isDead)
         {
             animationManager.PlaySlideAnimation();
             StartCoroutine(SlideColliderRoutine());

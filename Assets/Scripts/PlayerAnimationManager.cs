@@ -11,7 +11,7 @@ public class PlayerAnimationManager : MonoBehaviour
 
     public void PlayJumpAnimation()
     {
-        anim.SetBool("Jumping", true);
+        anim.SetTrigger("Jump");
     }
 
     public void PlaySlideAnimation()
@@ -19,8 +19,8 @@ public class PlayerAnimationManager : MonoBehaviour
         anim.SetTrigger("Slide");
     }
 
-    public void StopJumpAnimation()
+    public void SetDeathAnimation(bool isDead)
     {
-        anim.SetBool("Jumping", false);
+        anim.SetBool("Death", isDead);
     }
 }
