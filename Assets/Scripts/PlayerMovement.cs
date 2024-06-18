@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     public float slideDuration = 1.0f;
 
     //Váriaveis de animação
-    private Animator anim;
+    public PlayerAnimationManager animationManager;
 
     // Estados do jogador
     private bool isSliding = false;
@@ -316,7 +316,7 @@ public class PlayerMovement : MonoBehaviour
         if (!isJumping && !isSliding)
         {
             StartCoroutine(JumpRoutine());
-            //anim.SetBool("Pulando", true);     //Animação de pular(caio)
+            //animationManager.PlayJumpAnimation();
         }
     }
 
@@ -347,50 +347,32 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isSliding && !isJumping)
         {
-            StartCoroutine(SlideRoutine());
-            //anim.SetBool("Slide", true);        //Animação de slide(caio)
+            animationManager.PlaySlideAnimation();
+            StartCoroutine(SlideColliderRoutine());
         }
     }
 
-    IEnumerator SlideRoutine()
-{
-    isSliding = true;
-    float originalY = transform.position.y;
-    float targetY = originalY - 0.15f; // Diminui a altura do deslize
-
-    // Rotaciona o objeto 90 graus no eixo X
-    transform.Rotate(-90f, 0f, 0f);
-
-    // Duração fixa para mover para a posição de deslizamento
-    float slideDownDuration = 0.25f; // Ajuste conforme necessário
-    float slideTimer = 0f;
-
-    while (slideTimer < slideDownDuration)
+    IEnumerator SlideColliderRoutine()
     {
-        slideTimer += Time.deltaTime;
-        float newY = Mathf.Lerp(originalY, targetY, slideTimer / slideDownDuration);
-        transform.position = new Vector3(transform.position.x, newY, transform.position.z);
-        yield return null;
+        isSliding = true;
+        var collider = GetComponent<CapsuleCollider>(); // Obtém o CapsuleCollider do objeto
+
+        // Salva a altura original e calcula a nova altura
+        float originalHeight = collider.height;
+        float originalCenterY = collider.center.y;
+        float targetHeight = originalHeight * 0.5f; // Reduz a altura pela metade durante o slide
+
+        // Ajusta a altura do colisor para a nova altura
+        collider.height = targetHeight;
+        collider.center = new Vector3(collider.center.x, originalCenterY - originalHeight * 0.25f, collider.center.z);
+
+        // Espera pela duração do deslize
+        yield return new WaitForSeconds(slideDuration); // Ajuste slideDuration conforme necessário
+
+        // Restaura a altura original do colisor
+        collider.height = originalHeight;
+        collider.center = new Vector3(collider.center.x, originalCenterY, collider.center.z);
+
+        isSliding = false;
     }
-
-    // Espera pela duração do deslize sem alterar a posição Y
-    yield return new WaitForSeconds(slideDuration);
-
-    // Duração fixa para retornar à posição original
-    float slideUpDuration = 0.25f; // Ajuste conforme necessário
-    slideTimer = 0f;
-
-    while (slideTimer < slideUpDuration)
-    {
-        slideTimer += Time.deltaTime;
-        float newY = Mathf.Lerp(targetY, originalY, slideTimer / slideUpDuration);
-        transform.position = new Vector3(transform.position.x, newY, transform.position.z);
-        yield return null;
-    }
-
-    // Restaura a rotação original do objeto
-    transform.Rotate(90f, 0f, 0f);
-
-    isSliding = false;
-}
 }
