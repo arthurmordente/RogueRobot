@@ -13,7 +13,7 @@ public class Pedestrian : MonoBehaviour
     {
         // Define aleatoriamente a direção inicial do movimento
         movingToMax = Random.Range(0, 2) == 0; // Gera 0 ou 1 aleatoriamente
-        speed = Random.Range(0, 11);
+        speed = Random.Range(5, 15);
         targetX = movingToMax ? maxX : minX; // Define o alvo com base na direção
     }
 
