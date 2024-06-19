@@ -89,6 +89,7 @@ public class ScoreManager : MonoBehaviour
         // Se for um novo high score, inserimos na posição correta
         if (newHighScore)
         {
+            audioManager.PlayAudio3();
             // Se há espaço na lista ou se é necessário substituir o menor score
             if (scoreData.topScores.Count < 3) // Supondo que você deseja manter os 3 melhores scores
             {
@@ -114,6 +115,7 @@ public class ScoreManager : MonoBehaviour
         }
         else if (scoreData.topScores.Count < 3) // Caso não seja maior, mas ainda há espaço na lista
         {
+            audioManager.PlayAudio3();
             scoreData.topScores.Add(newEntry);
             getInputScreen.SetActive(true);
             playerNameInput.Select();
