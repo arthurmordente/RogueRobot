@@ -40,6 +40,16 @@ public class PlayerMovement : MonoBehaviour
     private const float doubleTapDelta = 0.3f;
     private bool isTapLong = false;
 
+    // Variáveis de interpolação
+    private Vector3 deathPosition;
+    private float interpolationSpeed = 2.0f; // Velocidade de interpolação
+    private bool isInterpolating = false;
+
+    void Awake()
+    {
+        // Procurar o PlayerAnimationManager no objeto pai
+        animationManager = GetComponentInChildren<PlayerAnimationManager>();
+    }
 
     void Start()
     {
@@ -50,17 +60,52 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if(!isDead)
+        if (!isDead)
         {
             UpdateMovementSpeed();
             HandleMobileInput();
         }
-        if (isDead)
+        else
         {
-            animationManager.SetDeathAnimation(true);
+            if (!animationManager.DeathAnimationPlayed)
+            {
+                Debug.Log("Debug 0");
+                animationManager.SetDeathAnimation(true);
+                animationManager.DeathAnimationPlayed = true;
+            }
+
+            // Garantir que a animação fique parada no último frame
+            if (!isInterpolating)
+            {   
+                Debug.Log("Debug 1");
+                // Iniciar a interpolação
+                deathPosition = new Vector3(transform.position.x, -1.8f , transform.position.z);
+                isInterpolating = true;
+            }
+
+            // Interpolar para a posição final
+            if (isInterpolating)
+            {
+                Debug.Log("Debug 2");
+                transform.position = Vector3.Lerp(transform.position, deathPosition, Time.deltaTime * interpolationSpeed);
+
+                // Verificar se a interpolação está próxima da posição final
+                if (Vector3.Distance(transform.position, deathPosition) < 0.01f)
+                {
+                    transform.position = deathPosition; // Garantir que a posição final seja exata
+                    isInterpolating = false;
+
+                    // Desativar o Animator no objeto filho após a interpolação
+                    animationManager.GetComponentInChildren<Animator>().enabled = false; // Desativa o Animator e mantém o objeto no último frame
+                }
+            }
+            
             return;
         }
     }
+
+
+
 
     void OnTriggerEnter(Collider other)
     {
@@ -373,7 +418,7 @@ public class PlayerMovement : MonoBehaviour
         collider.center = new Vector3(collider.center.x, originalCenterY - originalHeight * 0.25f, collider.center.z);
 
         // Espera pela duração do deslize
-        yield return new WaitForSeconds(slideDuration); // Ajuste slideDuration conforme necessário
+        yield return new WaitForSeconds(animationManager.GetSlideDuration());
 
         // Restaura a altura original do colisor
         collider.height = originalHeight;
