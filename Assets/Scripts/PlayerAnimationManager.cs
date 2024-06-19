@@ -1,17 +1,22 @@
 using UnityEngine;
 using System.Collections;
 
-public class PlayerAnimationManager : MonoBehaviour
+    public class PlayerAnimationManager : MonoBehaviour
 {
     public Animator anim;
     private bool deathAnimationPlayed = false;
     private Transform playerTransform;
+    public PlayerMovement player;
     private float slideDuration = 1.0f; // Ajuste conforme necessário
+    private float originalY;  // Armazenar a posição Y original de forma segura
+
+    private bool isSliding = false;
 
     void Awake()
     {
         anim = GetComponent<Animator>();
         playerTransform = transform; // Assume que o script está anexado ao GameObject do jogador
+        originalY = playerTransform.position.y;  // Guarda a posição Y original ao acordar
     }
 
     public void PlayJumpAnimation()
@@ -48,8 +53,8 @@ public class PlayerAnimationManager : MonoBehaviour
 
     IEnumerator SlideMovementRoutine()
     {
-        float originalY = playerTransform.position.y;
-        float loweredY = originalY - 2.0f; // Ajuste a altura do deslize conforme necessário
+        isSliding = true;
+        float loweredY = originalY - 2.0f; // Usa a altura original armazenada
         float elapsedTime = 0;
 
         // Movimento para baixo
@@ -61,10 +66,7 @@ public class PlayerAnimationManager : MonoBehaviour
             yield return null;
         }
 
-        // Fixa a posição abaixada ao final do movimento para baixo
         playerTransform.position = new Vector3(playerTransform.position.x, loweredY, playerTransform.position.z);
-
-        // Mantém a posição abaixada por um curto período
         yield return new WaitForSeconds(slideDuration / 2);
 
         // Movimento para cima
@@ -77,8 +79,9 @@ public class PlayerAnimationManager : MonoBehaviour
             yield return null;
         }
 
-        // Fixa a posição original ao final do movimento para cima
+        // Assegura que a posição final seja exatamente a original
         playerTransform.position = new Vector3(playerTransform.position.x, originalY, playerTransform.position.z);
+        isSliding = false;
     }
 
 
@@ -86,4 +89,13 @@ public class PlayerAnimationManager : MonoBehaviour
     {
         return slideDuration;
     }
+    void LateUpdate()
+    {
+        // Corrige qualquer discrepância na posição Y
+        if (!Mathf.Approximately(playerTransform.position.y, originalY) && !isSliding && !player.isJumping && !player.isDead)
+        {
+            playerTransform.position = new Vector3(playerTransform.position.x, originalY, playerTransform.position.z);
+        }
+    }
+
 }

@@ -2823,6 +2823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 5866666021183171181}
+  player: {fileID: 1511572081}
 --- !u!1 &743858861
 GameObject:
   m_ObjectHideFlags: 0
@@ -5286,6 +5287,8 @@ MonoBehaviour:
   jumpSpeed: 4
   slideDuration: 2
   animationManager: {fileID: 733648895}
+  isSliding: 0
+  isJumping: 0
   isInvulnerable: 0
   isWounded: 0
   isBlocked: 0

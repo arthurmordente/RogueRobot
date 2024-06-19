@@ -23,8 +23,8 @@ public class PlayerMovement : MonoBehaviour
     public PlayerAnimationManager animationManager;
 
     // Estados do jogador
-    private bool isSliding = false;
-    private bool isJumping = false;
+    public bool isSliding = false;
+    public bool isJumping = false;
     public bool isInvulnerable = false;
     public bool isWounded = false;
     public bool isBlocked = false;
@@ -345,9 +345,7 @@ public class PlayerMovement : MonoBehaviour
         {
             _currentLane = lanes.Length - 1;
         }
-
-        float x = lanes[_currentLane];
-        transform.position = new Vector3(x, transform.position.y, transform.position.z);
+        StartCoroutine(MoveToLane(_currentLane));
     }
 
     private void MoverEsquerda()
@@ -357,10 +355,29 @@ public class PlayerMovement : MonoBehaviour
         {
             _currentLane = 0;
         }
-
-        float x = lanes[_currentLane];
-        transform.position = new Vector3(x, transform.position.y, transform.position.z);
+        StartCoroutine(MoveToLane(_currentLane));
     }
+
+    IEnumerator MoveToLane(int targetLane)
+    {
+        float startTime = Time.time;
+        float journeyLength = Mathf.Abs(transform.position.x - lanes[targetLane]);
+        float journeyDuration = journeyLength / 50.0f;  // Define a velocidade do movimento
+        float startX = transform.position.x;
+        float endX = lanes[targetLane];
+
+        while (Time.time - startTime < journeyDuration)
+        {
+            float fracJourney = (Time.time - startTime) / journeyDuration;
+            float newX = Mathf.Lerp(startX, endX, fracJourney);
+            transform.position = new Vector3(newX, transform.position.y, transform.position.z);
+            yield return null;
+        }
+
+        // Certifica-se de que a posição final é exatamente a posição do alvo após a interpolação
+        transform.position = new Vector3(endX, transform.position.y, transform.position.z);
+    }
+
 
     private void Pular()
     {
