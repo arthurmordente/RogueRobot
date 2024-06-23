@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public PlayerMovement player;
     public AudioManager audioManager;
     public ScoreManager scoreManager;
+    public AchievementManager achv;
     public PositionTracker positionTracker;
     public TMP_Text speedDisplay;
     public TMP_Text multiplierDisplay;
@@ -74,6 +75,7 @@ public class GameManager : MonoBehaviour
         {
             currentSpeed += speedIncrement * Time.deltaTime;
         }
+        achv.CheckAndUnlockAchievements("speed", currentSpeed);
     }
 
     public void UpdateMultiplier(){
@@ -152,6 +154,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        achv.UnlockAchievement("First timer");
         player.isDead = true;
         scoreManager.UpdateTopScores();
     }

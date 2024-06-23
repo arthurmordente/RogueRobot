@@ -17,6 +17,11 @@ public class HUDManager : MonoBehaviour
     {
         SceneManager.LoadScene("Runner");
     }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene("Start");
+    }
     public void RestartGame()
     {
         SceneManager.LoadScene("Runner");

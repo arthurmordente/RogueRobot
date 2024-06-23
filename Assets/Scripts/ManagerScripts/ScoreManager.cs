@@ -22,6 +22,7 @@ public class ScoreManager : MonoBehaviour
 {
     public GameManager instance;
     public AudioManager audioManager;
+    public AchievementManager achv;
     public TMP_Text[] topScoreTexts; // Referências para os elementos de UI dos top scores
     public TMP_Text scoreText;
     public TMP_InputField playerNameInput; // Campo de entrada para o nome do jogador
@@ -61,6 +62,8 @@ public class ScoreManager : MonoBehaviour
     {
         score += value;
         scoreText.text = "Score: " + score.ToString("F0");
+        achv.CheckAndUnlockAchievements("score", score);
+
     }
 
     public float GetScore(){
