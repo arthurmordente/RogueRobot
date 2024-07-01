@@ -16,6 +16,7 @@ public class HUDManager : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("Runner");
+        Time.timeScale = 1.0f;
     }
 
     public void BackToMenu()

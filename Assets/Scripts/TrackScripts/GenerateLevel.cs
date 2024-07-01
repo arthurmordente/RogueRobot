@@ -33,7 +33,7 @@ public class GenerateLevel : MonoBehaviour
         DestroyObject scriptDaSec = sec.GetComponent<DestroyObject>();
         scriptDaSec.playerPos = jogadorTransform;
         zPos += 50;
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         creatingSec = false;
     }
 }
